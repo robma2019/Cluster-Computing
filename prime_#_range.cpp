@@ -1,3 +1,6 @@
+/*Using C++ codes from the w3resource only for testing purposes*/
+//https://www.w3resource.com/cpp-exercises/for-loop/cpp-for-loop-exercise-6.php
+
 #include <iostream>
 #include<math.h>
 using namespace std;
