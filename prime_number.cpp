@@ -9,7 +9,10 @@ int main()
 	cin >> num1;
 
 	for (int a = 1; a <= num1; a++)
-	{
+	{	// checking if the input numbers remainder is 0
+		// if it is then inc ctr.
+		// so it is true for every case, for example 7 / 1 = 7 remainder of 0
+		// so then inc ctr
 		if (num1 % a == 0)
 		{
 			ctr++;
