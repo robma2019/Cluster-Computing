@@ -7,25 +7,35 @@
 #ifndef HEAD_H
 #define HEAD_H
 
-//typedef void (Func::*functiontype)(void);
+typedef void (*type)(void);
 
 class Head
 {
     private:
-        //functiontype fun;
+        bool free;
         std::string hName;
         std::thread thisThread;
-        int lData; //Lower limit for dataset
-        int hData; //Upper limit for dataset
         std::vector<Node> children;
+        std::vector<type> queue;
 
     public:
         Head(std::string name)
         {
             hName = name;
+            free = true;
         }
         std::string getName();
-        void setThread(void (*f)() );
+        std::string getNode(int);
+        int nodeCount();
+        int jobCount();
+        void removeN(int);
+        void removeJ(int);
+        bool isFree();
+        bool assign();
+        void start();
+        void enqueue(type,bool);
+        bool setNext();
+        void setThread();
         void addNode(int capacity);
         void do_job();
         //void send_job(Node, functiontype, int, int);  

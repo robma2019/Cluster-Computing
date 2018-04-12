@@ -8,7 +8,7 @@ class Func
 
     public:
         void first();
-
+        void second();
 };
 
 #endif
