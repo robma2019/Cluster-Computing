@@ -21,8 +21,9 @@ class Node
         }
         int getCap();
         bool isFree();
-        void setThread( void(*func)() );
-        void setThread(funcIn, int);
+        void setThread(void(*func)());
+        void setThread(void(*f)(int),int);
+        //std::thread pass(void(*f)(int), int);
         void start();
 };
 

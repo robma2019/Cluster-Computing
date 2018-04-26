@@ -94,6 +94,7 @@ bool Head::assign()
             {
                 if(children[i].isFree())
                 {
+                    std::cout << "Number passed: " << queueIn[i].in << std::endl;
                     children[i].setThread(queueIn[i].t, queueIn[i].in);
                     queueIn.erase(queueIn.begin(),queueIn.begin()+1);
                     fullNum++;
@@ -104,19 +105,25 @@ bool Head::assign()
         }
     }
 
-    while(queue.size() > 0)
+    if(queue.size() > 0)
     {
         for(int i = fullNum; i < children.size(); i++)
         {
-            if(children[i].isFree())
+            if(queue.size() < 1)
             {
-                children[i].setThread(queue[0]);
-                queue.erase(queue.begin(),queue.begin()+1);
-                fullNum++;
+                std::cout << "All Jobs set!\n";
+                break;
+            }
+            else
+            {
+                if(children[i].isFree())
+                {
+                    children[i].setThread(queue[0]);
+                    queue.erase(queue.begin(),queue.begin()+1);
+                    fullNum++;
+                }
             }
         }
-        if(fullNum == children.size()-1)
-            break;;
     }
 
     std::cout << "Queue is empty or all Nodes have a job, ready to run!\n";

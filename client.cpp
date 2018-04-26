@@ -38,7 +38,16 @@ int main(void)
             //Do the command
             if(com == "quit")
             {
-                running = false;
+                cout << "Are you sure you want to drop out of clarkson? (y/n)";
+                cin >> wExtra;
+                if(wExtra == "y")
+                {
+                    running = false;
+                }
+                else
+                {
+                    //Dont quit
+                }
                 
             }
             if(com == "addHead")
@@ -61,6 +70,12 @@ int main(void)
                 if(cluster.size() < 1)
                 {
                     cout << "There are no Head nodes to add this too, Please create a Head node first!\n";
+                }
+                else if(cluster.size() == 1)
+                {
+                    cout << "How much processing power should this node have? (E.g. (1024)Kb)\n";
+                    cin >> iExtra;
+                    cluster[0].addNode(iExtra);
                 }
                 else
                 {
@@ -88,7 +103,7 @@ int main(void)
             }
             if(com == "listHead")
             {
-                cout << "should list here!!!\n";
+                //cout << "should list here!!!\n";
                 listHead();
             }
             if(com == "index")
@@ -99,13 +114,11 @@ int main(void)
             }
             if(com == "add")
             {
-                cout << "Which head? ";
-                cin >> wExtra;
-                if(index(wExtra) == -1)
+                if(cluster.size() < 1)
                 {
-                    cout << "Head name not recognized\n";
+                    cout << "No head node exists, try making a head first.\n";
                 }
-                else
+                else if(cluster.size() == 1)
                 {
                     cout << "Enter a number representing which function to add (0-2)\n";
                     cin >> iExtra;
@@ -116,32 +129,74 @@ int main(void)
                             break;
 
                         case 0:
-                            cluster[index(wExtra)].enqueue(Func::first,false);
+                            cluster[0].enqueue(Func::first,false);
                             break;
 
                         case 1:
-                            cluster[index(wExtra)].enqueue(Func::second,false);
+                            cluster[0].enqueue(Func::second,false);
                             break;
 
                         case 2:
                             cout << "To what degree would you like to test? ";
                             cin >> iExtra;
                             cout << "\n";
-                            cluster[index(wExtra)].enqueue(Func::third,iExtra);
+                            cluster[0].enqueue(Func::third,false);
+                    }
+                }
+                else
+                {
+                    cout << "Which head? ";
+                    cin >> wExtra;
+                    if(index(wExtra) == -1)
+                    {
+                        cout << "Head name not recognized\n";
+                    }
+                    else
+                    {
+                        cout << "Enter a number representing which function to add (0-2)\n";
+                        cin >> iExtra;
+                        switch(iExtra)
+                        {
+                            default:
+                                cout << "Function request not recognized.\n";
+                                break;
+
+                            case 0:
+                                cluster[index(wExtra)].enqueue(Func::first,false);
+                                break;
+
+                            case 1:
+                                cluster[index(wExtra)].enqueue(Func::second,false);
+                                break;
+
+                            case 2:
+                                cout << "To what degree would you like to test? ";
+                                cin >> iExtra;
+                                cout << "\n";
+                                cluster[index(wExtra)].enqueue(Func::third, false);
+                        }
                     }
                 }
             }
             if(com == "start")
             {
-                cout << "Which head? ";
-                cin >> wExtra;
-                if(index(wExtra) != -1)
+                if(cluster.size() == 1)
                 {
-                    if(cluster[index(wExtra)].assign())
-                        cluster[index(wExtra)].start();
+                    if(cluster[0].assign())
+                        cluster[0].start();
                 }
                 else
-                    cout << "Head name not recognized.\n";
+                {
+                    cout << "Which head? ";
+                    cin >> wExtra;
+                    if(index(wExtra) != -1)
+                    {
+                        if(cluster[index(wExtra)].assign())
+                            cluster[index(wExtra)].start();
+                    }
+                    else
+                        cout << "Head name not recognized.\n";
+                }
             }
             if(com == "delete")
             {
@@ -299,6 +354,7 @@ void makeHead(string name)
 
 void listHead()
 {
+    cout << "################### Head Tree ###########################\n";
     for(int i = 0; i < cluster.size(); i++)
     {
         cout << cluster[i].getName() << endl;
@@ -306,7 +362,7 @@ void listHead()
         {
             for(int j = 0; j < cluster[i].nodeCount(); j++)
             {
-                cout << "|->" << "node" << j << ": " << cluster[i].getNode(j) << endl;
+                cout << "|-->" << "node" << j << ": " << cluster[i].getNode(j) << endl;
             }
         }
     }

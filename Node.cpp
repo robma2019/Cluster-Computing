@@ -1,7 +1,8 @@
 #include <iostream>
 #include "Node.h"
+#include <thread>
 
-typedef void (*funcIn)(int);
+//typedef void (*funcIn)(int);
 
 int Node::getCap()
 {
@@ -19,10 +20,19 @@ void Node::setThread( void(*func)() )
     free = false;
 }
 
-void Node::setThread(funcIn f, int j)
+void Node::setThread( void(*f)(int), int i)
 {
-    thisThread = std::thread(f, j);
+    std::cout << "Num: " << i << std::endl;
+    thisThread = std::thread(f, i);
+    //std::cout << "call function directly: "; 
+    //f(i);
+    free = false;
 }
+
+//std::thread Node::pass(void (*f)(int), int j)
+//{
+//    return std::thread(f, j);
+//}
 
 void Node::start()
 {

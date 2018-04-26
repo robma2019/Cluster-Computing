@@ -9,7 +9,11 @@ class Func
     public:
         void first();
         void second();
-        void third(int);
+        void third();
+
+        //static void first();
+        //static void second();
+        //static void third();
 };
 
 #endif
